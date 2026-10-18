@@ -42,8 +42,10 @@ enum MarkdownPage {
         <body>
         <article id="content" class="markdown-body"></article>
         <script>
-        (function () {
-          const bytes = Uint8Array.from(atob("\(source)"), c => c.charCodeAt(0));
+        // Se expone para que la app pueda volver a renderizar sin recargar la página
+        // (así se conserva la posición de scroll cuando el fichero cambia).
+        window.renderMarkdown = function (base64) {
+          const bytes = Uint8Array.from(atob(base64), c => c.charCodeAt(0));
           let md = new TextDecoder("utf-8").decode(bytes);
 
           // Front matter YAML (---) al principio: lo mostramos como bloque de código discreto.
@@ -73,11 +75,17 @@ enum MarkdownPage {
             if (used[id] !== undefined) { used[id] += 1; id += "-" + used[id]; } else { used[id] = 0; }
             h.id = id;
           });
-        })();
+        };
+        renderMarkdown("\(source)");
         </script>
         </body>
         </html>
         """
+    }
+
+    /// JavaScript que vuelve a pintar la página ya cargada con un Markdown nuevo.
+    static func rerenderScript(markdown: String) -> String {
+        "renderMarkdown(\"\(Data(markdown.utf8).base64EncodedString())\");"
     }
 
     private static func resource(_ name: String) -> String {

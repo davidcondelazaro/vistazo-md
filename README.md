@@ -2,7 +2,7 @@
 
 <h1 align="center">Vistazo MD</h1>
 
-<p align="center">Vista rápida de ficheros Markdown para macOS: selecciona un <code>.md</code> en Finder, pulsa la barra espaciadora y míralo renderizado.</p>
+<p align="center">Vista rápida y visor de ficheros Markdown para macOS: selecciona un <code>.md</code> en Finder y pulsa la barra espaciadora, o ábrelo con doble clic.</p>
 
 <p align="center">
   <img src="docs/captura-claro.png" width="45%" alt="Vista previa en modo claro">
@@ -16,7 +16,8 @@
 - **Modo claro y oscuro** siguiendo la apariencia del sistema.
 - **Front matter YAML** (`---` al inicio) mostrado como bloque discreto.
 - **Seguro:** el HTML incrustado se limpia, así que un `.md` no puede ejecutar código.
-- La app también funciona como visor: abre un fichero con ⌘O o arrástralo a la ventana.
+- **Visor con doble clic:** cada fichero se abre en su propia ventana (o pestaña) y **se recarga solo** cuando lo guardas desde otro editor, sin perder la posición.
+- Zoom con ⌘+ / ⌘− / ⌘0 y recarga manual con ⌘R.
 
 Reconoce `.md`, `.markdown`, `.mdown`, `.mkd`, `.rmd`, `.qmd` y los tipos de Markdown de Typora, iA Writer, RStudio y Quarto.
 
@@ -33,6 +34,10 @@ Reconoce `.md`, `.markdown`, `.mdown`, `.mkd`, `.rmd`, `.qmd` y los tipos de Mar
 4. Abre la app una vez: así macOS registra la extensión de Quick Look.
 
 Requiere macOS 14 Sonoma o posterior, en Apple Silicon o Intel.
+
+### Abrir los .md con doble clic
+
+Abre la app sin ningún fichero y pulsa **Usar Vistazo MD como visor predeterminado**. También puedes hacerlo desde Finder: **Obtener información** sobre un `.md` → **Abrir con** → Vistazo MD → **Cambiar todo**.
 
 ### Si ya tienes otro visor de Markdown
 
@@ -58,7 +63,7 @@ brew install xcodegen
 | `QuickLookExtension/` | La extensión de Quick Look: un `QLPreviewingController` con un `WKWebView` |
 | `Shared/MarkdownPage.swift` | Construye la página HTML autocontenida que renderiza el Markdown |
 | `Shared/Resources/` | marked, DOMPurify, highlight.js y la hoja de estilo de GitHub |
-| `VistazoMD/` | La app contenedora: la extensión necesita una app que la instale, y además sirve de visor |
+| `VistazoMD/` | La app: transporta la extensión y hace de visor (una ventana por fichero, recarga automática, bienvenida) |
 | `project.yml` | Definición del proyecto para XcodeGen (el `.xcodeproj` no se versiona) |
 
 El Markdown se convierte a HTML dentro del propio WebView con JavaScript. Todo va incluido en la app y no se descarga nada de internet, salvo las imágenes remotas que enlace el documento.
