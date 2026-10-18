@@ -9,5 +9,10 @@
 	<!-- WKWebView necesita este permiso dentro del sandbox (y permite imágenes remotas). -->
 	<key>com.apple.security.network.client</key>
 	<true/>
+	<!-- Lectura (solo lectura) de las imágenes locales que enlaza el Markdown y del fichero vigilado. -->
+	<key>com.apple.security.temporary-exception.files.absolute-path.read-only</key>
+	<array>
+		<string>/</string>
+	</array>
 </dict>
 </plist>

@@ -10,9 +10,7 @@ final class PreviewViewController: NSViewController, QLPreviewingController, WKN
     override var nibName: NSNib.Name? { nil }
 
     override func loadView() {
-        let configuration = WKWebViewConfiguration()
-        configuration.defaultWebpagePreferences.allowsContentJavaScript = true
-        webView = WKWebView(frame: NSRect(x: 0, y: 0, width: 900, height: 700), configuration: configuration)
+        webView = WKWebView(frame: NSRect(x: 0, y: 0, width: 900, height: 700), configuration: .markdownViewer())
         webView.autoresizingMask = [.width, .height]
         webView.navigationDelegate = self
         webView.setValue(false, forKey: "drawsBackground")

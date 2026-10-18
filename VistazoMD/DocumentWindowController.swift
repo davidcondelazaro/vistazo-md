@@ -13,7 +13,7 @@ final class DocumentWindowController: NSWindowController, NSWindowDelegate, WKNa
 
     init(fileURL: URL) {
         self.fileURL = fileURL
-        webView = WKWebView(frame: NSRect(x: 0, y: 0, width: 900, height: 800))
+        webView = WKWebView(frame: NSRect(x: 0, y: 0, width: 900, height: 800), configuration: .markdownViewer())
         webView.setValue(false, forKey: "drawsBackground")
         webView.allowsMagnification = true
 

@@ -11,7 +11,7 @@
 
 ## Qué hace
 
-- **Markdown de GitHub (GFM):** títulos, listas, tablas, listas de tareas, tachado, citas, enlaces e imágenes remotas.
+- **Markdown de GitHub (GFM):** títulos, listas, tablas, listas de tareas, tachado, citas, enlaces e imágenes (remotas y locales, con rutas relativas al fichero).
 - **Resaltado de sintaxis** en los bloques de código, con detección automática del lenguaje.
 - **Modo claro y oscuro** siguiendo la apariencia del sistema.
 - **Front matter YAML** (`---` al inicio) mostrado como bloque discreto.

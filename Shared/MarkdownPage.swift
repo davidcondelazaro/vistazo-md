@@ -22,7 +22,7 @@ enum MarkdownPage {
         <head>
         <meta charset="utf-8">
         <meta name="color-scheme" content="light dark">
-        <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; img-src data: file: https: http:; font-src data:;">
+        <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; img-src data: https: http: vistazo-local:; font-src data:;">
         <title>\(escape(title))</title>
         <style>\(resource("github-markdown.css"))</style>
         <style>@media (prefers-color-scheme: light) { \(resource("hljs-github.css")) }</style>
@@ -62,6 +62,16 @@ enum MarkdownPage {
 
           const el = document.getElementById("content");
           el.innerHTML = DOMPurify.sanitize(html, { ADD_ATTR: ["target"] });
+
+          // Imágenes locales (rutas relativas al .md): las sirve la app con su propio esquema.
+          el.querySelectorAll("img[src]").forEach(img => {
+            const src = img.getAttribute("src");
+            if (/^(https?|data|vistazo-local):/i.test(src)) return;
+            try {
+              const url = new URL(src, document.baseURI);
+              if (url.protocol === "file:") img.src = "vistazo-local://" + url.pathname;
+            } catch (e) {}
+          });
 
           el.querySelectorAll("pre code").forEach(block => {
             try { hljs.highlightElement(block); } catch (e) {}
