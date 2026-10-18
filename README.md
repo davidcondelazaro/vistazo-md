@@ -1,0 +1,68 @@
+<p align="center"><img src="docs/icono.png" width="128" alt="Icono de Vistazo MD"></p>
+
+<h1 align="center">Vistazo MD</h1>
+
+<p align="center">Vista rápida de ficheros Markdown para macOS: selecciona un <code>.md</code> en Finder, pulsa la barra espaciadora y míralo renderizado.</p>
+
+<p align="center">
+  <img src="docs/captura-claro.png" width="45%" alt="Vista previa en modo claro">
+  <img src="docs/captura-oscuro.png" width="45%" alt="Vista previa en modo oscuro">
+</p>
+
+## Qué hace
+
+- **Markdown de GitHub (GFM):** títulos, listas, tablas, listas de tareas, tachado, citas, enlaces e imágenes remotas.
+- **Resaltado de sintaxis** en los bloques de código, con detección automática del lenguaje.
+- **Modo claro y oscuro** siguiendo la apariencia del sistema.
+- **Front matter YAML** (`---` al inicio) mostrado como bloque discreto.
+- **Seguro:** el HTML incrustado se limpia, así que un `.md` no puede ejecutar código.
+- La app también funciona como visor: abre un fichero con ⌘O o arrástralo a la ventana.
+
+Reconoce `.md`, `.markdown`, `.mdown`, `.mkd`, `.rmd`, `.qmd` y los tipos de Markdown de Typora, iA Writer, RStudio y Quarto.
+
+## Instalación
+
+1. Descarga `VistazoMD-x.y.zip` desde [Releases](../../releases) y descomprímelo.
+2. Mueve **Vistazo MD.app** a la carpeta Aplicaciones.
+3. La app no está notarizada por Apple (es un proyecto personal sin cuenta de Apple Developer), así que macOS la bloqueará la primera vez. Para permitirla, elige una de estas dos opciones:
+   - Intenta abrirla, ve a **Ajustes del Sistema → Privacidad y seguridad** y pulsa **Abrir igualmente**.
+   - O ejecuta en Terminal:
+     ```bash
+     xattr -dr com.apple.quarantine "/Applications/Vistazo MD.app"
+     ```
+4. Abre la app una vez: así macOS registra la extensión de Quick Look.
+
+Requiere macOS 14 Sonoma o posterior, en Apple Silicon o Intel.
+
+### Si ya tienes otro visor de Markdown
+
+macOS usa una sola extensión de Quick Look por tipo de fichero. Si tienes otra instalada (por ejemplo QLMarkdown), desactívala en **Ajustes del Sistema → General → Ítems de inicio y extensiones → Quick Look**. No hace falta desinstalarla.
+
+## Compilar desde el código
+
+Necesitas Xcode 26 o posterior (el icono usa el formato de Icon Composer) y [XcodeGen](https://github.com/yonaskolb/XcodeGen):
+
+```bash
+brew install xcodegen
+./scripts/install.sh
+```
+
+`install.sh` genera el proyecto, compila, copia la app en `~/Applications` y registra la extensión. Para trabajar en Xcode, ejecuta `xcodegen generate` y abre `VistazoMD.xcodeproj`.
+
+`./scripts/release.sh` crea el `.zip` universal en `dist/`.
+
+## Cómo está hecho
+
+| Parte | Qué es |
+|-------|--------|
+| `QuickLookExtension/` | La extensión de Quick Look: un `QLPreviewingController` con un `WKWebView` |
+| `Shared/MarkdownPage.swift` | Construye la página HTML autocontenida que renderiza el Markdown |
+| `Shared/Resources/` | marked, DOMPurify, highlight.js y la hoja de estilo de GitHub |
+| `VistazoMD/` | La app contenedora: la extensión necesita una app que la instale, y además sirve de visor |
+| `project.yml` | Definición del proyecto para XcodeGen (el `.xcodeproj` no se versiona) |
+
+El Markdown se convierte a HTML dentro del propio WebView con JavaScript. Todo va incluido en la app y no se descarga nada de internet, salvo las imágenes remotas que enlace el documento.
+
+## Licencia
+
+[MIT](LICENSE) © 2026 David Conde. Las librerías incluidas mantienen sus licencias: ver [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).

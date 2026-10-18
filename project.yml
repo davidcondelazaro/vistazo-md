@@ -1,0 +1,50 @@
+name: VistazoMD
+options:
+  bundleIdPrefix: com.dconde
+  deploymentTarget:
+    macOS: "14.0"
+  createIntermediateGroups: true
+settings:
+  base:
+    SWIFT_VERSION: "5.0"
+    MARKETING_VERSION: "1.0"
+    CURRENT_PROJECT_VERSION: "1"
+    # Firma ad-hoc ("Sign to Run Locally"): suficiente para usarla en este Mac.
+    CODE_SIGN_STYLE: Manual
+    CODE_SIGN_IDENTITY: "-"
+    DEVELOPMENT_TEAM: ""
+    ENABLE_HARDENED_RUNTIME: YES
+targets:
+  VistazoMD:
+    type: application
+    platform: macOS
+    sources:
+      - VistazoMD
+      - Shared
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.dconde.VistazoMD
+        PRODUCT_NAME: Vistazo MD
+        CODE_SIGN_ENTITLEMENTS: VistazoMD/VistazoMD.entitlements
+        GENERATE_INFOPLIST_FILE: YES
+        INFOPLIST_KEY_CFBundleDisplayName: Vistazo MD
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+        INFOPLIST_KEY_LSApplicationCategoryType: public.app-category.developer-tools
+        INFOPLIST_KEY_NSHumanReadableCopyright: "© 2026 David Conde"
+    dependencies:
+      - target: MarkdownPreview
+        embed: true
+        codeSign: true
+  MarkdownPreview:
+    type: app-extension
+    platform: macOS
+    sources:
+      - QuickLookExtension
+      - Shared
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.dconde.VistazoMD.MarkdownPreview
+        CODE_SIGN_ENTITLEMENTS: QuickLookExtension/MarkdownPreview.entitlements
+        INFOPLIST_FILE: QuickLookExtension/Info.plist
+        GENERATE_INFOPLIST_FILE: NO
+        SKIP_INSTALL: YES
