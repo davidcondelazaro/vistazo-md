@@ -4,10 +4,11 @@ options:
   deploymentTarget:
     macOS: "14.0"
   createIntermediateGroups: true
+  developmentLanguage: en
 settings:
   base:
     SWIFT_VERSION: "5.0"
-    MARKETING_VERSION: "1.2"
+    MARKETING_VERSION: "1.3"
     CURRENT_PROJECT_VERSION: "1"
     # Firma ad-hoc ("Sign to Run Locally"): suficiente para usarla en este Mac.
     CODE_SIGN_STYLE: Manual
@@ -33,7 +34,7 @@ targets:
         NSPrincipalClass: NSApplication
         # La app se ofrece como visor (no editor) de Markdown en "Abrir con".
         CFBundleDocumentTypes:
-          - CFBundleTypeName: Documento Markdown
+          - CFBundleTypeName: Markdown Document
             CFBundleTypeRole: Viewer
             LSHandlerRank: Alternate
             LSItemContentTypes:
@@ -45,7 +46,7 @@ targets:
               - org.quarto.qmarkdown
         UTImportedTypeDeclarations:
           - UTTypeIdentifier: net.daringfireball.markdown
-            UTTypeDescription: Documento Markdown
+            UTTypeDescription: Markdown Document
             UTTypeConformsTo: [public.plain-text]
             UTTypeReferenceURL: https://daringfireball.net/projects/markdown/
             UTTypeTagSpecification:

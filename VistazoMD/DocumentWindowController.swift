@@ -39,7 +39,7 @@ final class DocumentWindowController: NSWindowController, NSWindowDelegate, WKNa
         do {
             return try MarkdownPage.readText(at: fileURL)
         } catch {
-            return "> ⚠️ No se puede leer **\(fileURL.lastPathComponent)**: \(error.localizedDescription)"
+            return String(localized: "> ⚠️ Can’t read **\(fileURL.lastPathComponent)**: \(error.localizedDescription)")
         }
     }
 

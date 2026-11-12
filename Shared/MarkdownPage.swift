@@ -31,6 +31,7 @@ enum MarkdownPage {
           html, body { margin: 0; background: Canvas; }
           .markdown-body { box-sizing: border-box; max-width: 980px; margin: 0 auto; padding: 32px 40px 48px; background: transparent; }
           .markdown-body pre code.hljs { padding: 0; background: transparent; }
+          .markdown-body img { background-color: transparent; }
           .markdown-body input[type=checkbox] { margin: 0 .35em .2em -1.4em; vertical-align: middle; }
           .frontmatter { font-size: 12px; opacity: .75; }
           @media (max-width: 600px) { .markdown-body { padding: 16px; } }

@@ -15,14 +15,14 @@ struct WelcomeView: View {
             Image(nsImage: NSApp.applicationIconImage)
                 .resizable()
                 .frame(width: 96, height: 96)
-            Text("Vistazo MD")
+            Text(verbatim: "Vistazo MD")
                 .font(.title.bold())
-            Text("Selecciona un fichero .md en Finder y pulsa la barra espaciadora para verlo al momento, o ábrelo con doble clic.")
+            Text("Select a .md file in Finder and press the space bar to preview it instantly, or double-click to open it.")
                 .multilineTextAlignment(.center)
                 .foregroundStyle(.secondary)
                 .fixedSize(horizontal: false, vertical: true)
 
-            Button("Abrir un fichero Markdown…", action: openFile)
+            Button("Open a Markdown File…", action: openFile)
                 .keyboardShortcut(.defaultAction)
                 .controlSize(.large)
 
@@ -30,7 +30,7 @@ struct WelcomeView: View {
 
             defaultViewerSection
 
-            Button("Ajustes de extensiones de Quick Look…") {
+            Button("Quick Look Extension Settings…") {
                 NSWorkspace.shared.open(URL(string: "x-apple.systempreferences:com.apple.ExtensionsPreferences?extensionPointIdentifier=com.apple.quicklook.preview")!)
             }
             .buttonStyle(.link)
@@ -53,13 +53,13 @@ struct WelcomeView: View {
 
     @ViewBuilder private var defaultViewerSection: some View {
         if defaultViewer.isThisApp {
-            Label("Vistazo MD es tu visor predeterminado de Markdown", systemImage: "checkmark.circle.fill")
+            Label("Vistazo MD is your default Markdown viewer", systemImage: "checkmark.circle.fill")
                 .foregroundStyle(.green)
         } else {
             VStack(spacing: 8) {
-                Text("Ahora los .md se abren con **\(defaultViewer.name)**.")
+                Text(".md files currently open with **\(defaultViewer.name)**.")
                     .foregroundStyle(.secondary)
-                Button("Usar Vistazo MD como visor predeterminado") {
+                Button("Use Vistazo MD as Default Viewer") {
                     Task {
                         do {
                             try await DefaultViewer.makeThisAppDefault()
@@ -86,7 +86,7 @@ struct DefaultViewer {
 
     static func current() -> DefaultViewer {
         guard let url = NSWorkspace.shared.urlForApplication(toOpen: markdown) else {
-            return DefaultViewer(name: "ninguna app", isThisApp: false)
+            return DefaultViewer(name: String(localized: "no app"), isThisApp: false)
         }
         let isThisApp = Bundle(url: url)?.bundleIdentifier == Bundle.main.bundleIdentifier
         return DefaultViewer(name: FileManager.default.displayName(atPath: url.path)
