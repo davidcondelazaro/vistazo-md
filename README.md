@@ -37,16 +37,6 @@ Recognizes `.md`, `.markdown`, `.mdown`, `.mkd`, `.rmd`, `.qmd` and the Markdown
 
 Requires macOS 14 Sonoma or later, on Apple Silicon or Intel.
 
-### With Homebrew
-
-```bash
-brew install davidcondelazaro/tap/vistazo-md
-```
-
-Then open **Vistazo MD** once so macOS registers the Quick Look extension. That's it.
-
-### Manual download
-
 1. Download `VistazoMD-x.y.zip` from [the latest release](../../releases/latest) and unzip it.
 2. Move **Vistazo MD.app** to your Applications folder.
 3. Open it. The first time, macOS will say it can't verify the app (see below). Go to **System Settings → Privacy & Security**, scroll down and click **Open Anyway**.
